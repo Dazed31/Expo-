@@ -4,7 +4,10 @@ import { Href, Link, useRouter } from "expo-router";
 import React from "react";
 import {
   Alert,
+  KeyboardAvoidingView,
+  Platform,
   SafeAreaView,
+  ScrollView,
   Text,
   TextInput,
   TouchableOpacity,
@@ -58,8 +61,18 @@ export default function Page() {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#F4EDE5" }}>
-      <View style={{ flex: 1, paddingHorizontal: 24 }}>
-        <View style={{ flex: 1, justifyContent: "center" }}>
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        keyboardVerticalOffset={Platform.OS === "ios" ? 90 : 0}
+      >
+        <ScrollView 
+          contentContainerStyle={{ flexGrow: 1 }}
+          keyboardShouldPersistTaps="handled"
+          showsVerticalScrollIndicator={false}
+        >
+          <View style={{ flex: 1, paddingHorizontal: 24 }}>
+            <View style={{ flex: 1, justifyContent: "center" }}>
           <View style={{ alignItems: "center", marginBottom: 32 }}>
             <Text
               style={{
@@ -286,8 +299,10 @@ export default function Page() {
               </Text>
             </TouchableOpacity>
           </Link>
-        </View>
-      </View>
+            </View>
+          </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 }

@@ -50,61 +50,8 @@ export default function Page() {
     }
   }, [startSSOFlow])
 
-  const onApplePress = useCallback(async () => {
-    try {
-      // Start the Apple authentication process
-      const { createdSessionId, setActive, signIn, signUp } = await startSSOFlow({
-        strategy: 'oauth_apple',
-        redirectUrl: AuthSession.makeRedirectUri(),
-      })
-
-      // If sign in was successful, set the active session
-      if (createdSessionId) {
-        setActive!({ session: createdSessionId })
-      } else {
-        // If there is no `createdSessionId`,
-        // there are missing requirements, such as MFA
-        // Use the `signIn` or `signUp` returned from `startSSOFlow`
-        // to handle next steps
-      }
-    } catch (err) {
-      // See https://clerk.com/docs/custom-flows/error-handling
-      // for more info on error handling
-      console.error('Apple Sign In Error:', JSON.stringify(err, null, 2))
-    }
-  }, [startSSOFlow])
-
   return (
     <View style={{ gap: 12 }}>
-      {/* Apple Sign In Button */}
-      <TouchableOpacity
-        onPress={onApplePress}
-        style={{
-          backgroundColor: '#000000',
-          borderRadius: 12,
-          paddingVertical: 16,
-          shadowColor: '#000',
-          shadowOffset: { width: 0, height: 2 },
-          shadowOpacity: 0.1,
-          shadowRadius: 4,
-          elevation: 2,
-        }}
-        activeOpacity={0.8}
-      >
-        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-          <Ionicons name="logo-apple" size={20} color="#FFFFFF"/>
-          <Text style={{ 
-            color: '#FFFFFF', 
-            fontWeight: '600', 
-            fontSize: 16, 
-            marginLeft: 12,
-            fontFamily: 'Philosopher-Bold'
-          }}>
-            Continue with Apple
-          </Text>
-        </View>
-      </TouchableOpacity>
-
       {/* Google Sign In Button */}
       <TouchableOpacity
         onPress={onGooglePress}

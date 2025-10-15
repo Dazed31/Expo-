@@ -3,12 +3,15 @@ import { Ionicons } from "@expo/vector-icons";
 import { Href, Link, useRouter } from "expo-router";
 import * as React from "react";
 import {
-  Alert,
-  SafeAreaView,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View
+    Alert,
+    KeyboardAvoidingView,
+    Platform,
+    SafeAreaView,
+    ScrollView,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View
 } from "react-native";
 
 export default function Page() {
@@ -228,9 +231,18 @@ export default function Page() {
   if (pendingVerification) {
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: '#F4EDE5' }}>
-       
-          <View style={{ flex: 1, paddingHorizontal: 24, justifyContent: 'space-between' }}>
-            <View style={{ flex: 1, justifyContent: 'center', minHeight: 400 }}>
+        <KeyboardAvoidingView
+          style={{ flex: 1 }}
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0}
+        >
+          <ScrollView 
+            contentContainerStyle={{ flexGrow: 1 }}
+            keyboardShouldPersistTaps="handled"
+            showsVerticalScrollIndicator={false}
+          >
+            <View style={{ flex: 1, paddingHorizontal: 24, justifyContent: 'space-between' }}>
+              <View style={{ flex: 1, justifyContent: 'center', minHeight: 400 }}>
               <View style={{ alignItems: 'center', marginBottom: 32 }}>
                 <View
                   style={{
@@ -397,15 +409,26 @@ export default function Page() {
                 Almost ready to book your appointment!
               </Text>
             </View>
-          </View>
-        
+            </View>
+          </ScrollView>
+        </KeyboardAvoidingView>
       </SafeAreaView>
     );
   }
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#F4EDE5' }}>
-        <View style={{ flex: 1, paddingHorizontal: 20, justifyContent: 'space-between' }}>
+        <KeyboardAvoidingView
+          style={{ flex: 1 }}
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0}
+        >
+          <ScrollView 
+            contentContainerStyle={{ flexGrow: 1 }}
+            keyboardShouldPersistTaps="handled"
+            showsVerticalScrollIndicator={false}
+          >
+            <View style={{ flex: 1, paddingHorizontal: 20, justifyContent: 'space-between' }}>
           <View style={{ flex: 1, justifyContent: 'center', minHeight: 500 }}>
             <View style={{ alignItems: 'center', marginBottom: 32 }}>
               <Text style={{ 
@@ -603,7 +626,9 @@ export default function Page() {
               Ready to transform your beauty routine?
             </Text>
           </View> */}
-        </View>
+          </View>
+        </ScrollView>
+        </KeyboardAvoidingView>
     </SafeAreaView>
   );
 }
